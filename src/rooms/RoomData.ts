@@ -3,7 +3,7 @@ import { IGameData } from "../games/IGameData"
 /**
  * Represents data about a room on the server.
  */
-export class RoomData {
+export class RoomData<TGameData extends IGameData> {
     /**
      * Constructor.
      */
@@ -11,7 +11,7 @@ export class RoomData {
         public name: string,
         public players: string[],
         public spectators: string[],
-        public gameData: IGameData,
+        public gameData: TGameData,
     ) { }
 
     /**
