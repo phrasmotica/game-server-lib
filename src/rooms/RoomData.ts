@@ -26,14 +26,11 @@ export class RoomData<TGameData extends IGameData> {
     }
 
     /**
-     * Removes the given player from the room.
+     * Adds the given player to the room as a spectator.
      */
-    removePlayer(player: string) {
-        if (this.playerIsPresent(player)) {
-            this.gameData.removePlayer(player)
-
-            let index = this.players.indexOf(player)
-            this.players.splice(index, 1)
+    addSpectator(player: string) {
+        if (!this.spectatorIsPresent(player)) {
+            this.spectators.push(player)
         }
 
         return true
@@ -47,11 +44,21 @@ export class RoomData<TGameData extends IGameData> {
     }
 
     /**
-     * Adds the given player to the room as a spectator.
+     * Returns whether the given player is in this room as a spectator.
      */
-    addSpectator(player: string) {
-        if (!this.spectatorIsPresent(player)) {
-            this.spectators.push(player)
+    spectatorIsPresent(player: string) {
+        return this.spectators.includes(player)
+    }
+
+    /**
+     * Removes the given player from the room.
+     */
+    removePlayer(player: string) {
+        if (this.playerIsPresent(player)) {
+            this.gameData.removePlayer(player)
+
+            let index = this.players.indexOf(player)
+            this.players.splice(index, 1)
         }
 
         return true
@@ -70,17 +77,17 @@ export class RoomData<TGameData extends IGameData> {
     }
 
     /**
-     * Returns whether the given player is in this room as a spectator.
-     */
-    spectatorIsPresent(player: string) {
-        return this.spectators.includes(player)
-    }
-
-    /**
      * Starts a game in this room with the given rule set.
      */
     startGame() {
         this.gameData.start(this.players)
+    }
+
+    /**
+     * Returns whether this room's game is in progress.
+     */
+    isInProgress() {
+        return this.gameData.isInProgress()
     }
 
     /**
@@ -91,12 +98,5 @@ export class RoomData<TGameData extends IGameData> {
         this.spectators = []
 
         return this.gameData.clear()
-    }
-
-    /**
-     * Returns whether this room's game is in progress.
-     */
-    isInProgress() {
-        return this.gameData.isInProgress()
     }
 }
