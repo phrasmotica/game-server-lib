@@ -6,6 +6,8 @@ import { RoomWith } from "./models/RoomWith"
 
 import { IGameData } from "./games/IGameData"
 
+import { PlayerData } from "./players/PlayerData"
+
 import { RoomData } from "./rooms/RoomData"
 
 import { GameServer } from "./servers/GameServer"
@@ -18,6 +20,8 @@ export {
     RoomWith,
 
     IGameData,
+
+    PlayerData,
 
     RoomData,
 

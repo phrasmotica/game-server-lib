@@ -1,17 +1,12 @@
 import { Socket } from "socket.io"
 
+import { PlayerData } from "../players/PlayerData"
+
 /**
  * Represents a map of socket IDs to player names.
  */
 type SocketPlayerMap = {
-    [socketId: string] : string
-}
-
-/**
- * Represents a map of player names to sockets.
- */
-type SocketMap = {
-    [playerName: string] : Socket
+    [socketId: string] : PlayerData
 }
 
 /**
@@ -24,56 +19,35 @@ export class SocketManager {
     socketData: SocketPlayerMap = {}
 
     /**
-     * Sockets indexed by player ID.
-     */
-    sockets: SocketMap = {}
-
-    /**
      * Returns data for all players.
      */
     getAllPlayersData() {
-        return Object.keys(this.sockets)
+        return Object.keys(this.socketData).map(s => this.getPlayerData(s))
     }
 
     /**
-     * Returns the player name for the given socket ID.
+     * Returns data for the player connected via the socket with the given ID.
      */
-    getPlayerName(socketId: string) {
+    getPlayerData(socketId: string) {
         return this.socketData[socketId]
     }
 
     /**
-     * Sets the player name for the given socket ID.
+     * Sets the player data for the given socket ID.
      */
-    setPlayerName(socketId: string, playerName: string) {
-        this.socketData[socketId] = playerName
+    setPlayerData(socket: Socket, playerName: string) {
+        let playerData = new PlayerData(
+            playerName,
+            new Date(socket.handshake.time)
+        )
+
+        this.socketData[socket.id] = playerData
     }
 
     /**
      * Removes the socket with the given ID.
      */
-    removePlayerName(socketId: string) {
+    removePlayer(socketId: string) {
         delete this.socketData[socketId]
-    }
-
-    /**
-     * Returns the socket for the given player.
-     */
-    getSocket(playerName: string) {
-        return this.sockets[playerName]
-    }
-
-    /**
-     * Sets the socket for the given player name.
-     */
-    setSocket(playerName: string, socket: Socket) {
-        this.sockets[playerName] = socket
-    }
-
-    /**
-     * Removes the socket for the given player.
-     */
-    removeSocket(playerName: string) {
-        delete this.sockets[playerName]
     }
 }

@@ -1,8 +1,14 @@
 import * as TypeMoq from "typemoq"
 
+import { SocketManager } from "../src/data/SocketManager"
+
 import { IGameData } from "../src/games/IGameData"
 
 import { RoomData } from "../src/rooms/RoomData"
+
+export const createSocketManager = () => {
+    return new SocketManager()
+}
 
 export const createRoomData = (
     args: {
