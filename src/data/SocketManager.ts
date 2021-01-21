@@ -10,6 +10,13 @@ type SocketPlayerMap = {
 }
 
 /**
+ * Represents a map of player names to sockets.
+ */
+type SocketMap = {
+    [playerName: string] : Socket
+}
+
+/**
  * Class for managing sockets on the server.
  */
 export class SocketManager {
@@ -17,6 +24,11 @@ export class SocketManager {
      * Player names indexed by socket ID.
      */
     socketData: SocketPlayerMap = {}
+
+    /**
+     * Sockets indexed by player ID.
+     */
+    sockets: SocketMap = {}
 
     /**
      * Returns data for all players.
@@ -33,7 +45,7 @@ export class SocketManager {
     }
 
     /**
-     * Sets the player data for the given socket ID.
+     * Sets the player data for the given socket.
      */
     setPlayerData(socket: Socket, playerName: string) {
         let playerData = new PlayerData(
@@ -42,6 +54,14 @@ export class SocketManager {
         )
 
         this.socketData[socket.id] = playerData
+        this.sockets[playerName] = socket
+    }
+
+    /**
+     * Returns the socket for the given player.
+     */
+    getSocket(playerName: string) {
+        return this.sockets[playerName]
     }
 
     /**
