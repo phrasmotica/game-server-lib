@@ -1,6 +1,6 @@
 {
   "name": "game-server-lib",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Class library for game server",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
