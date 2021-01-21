@@ -26,7 +26,7 @@ export class SocketManager {
     socketData: SocketPlayerMap = {}
 
     /**
-     * Sockets indexed by player ID.
+     * Sockets indexed by player name.
      */
     sockets: SocketMap = {}
 
@@ -68,6 +68,8 @@ export class SocketManager {
      * Removes the socket with the given ID.
      */
     removePlayer(socketId: string) {
+        let playerName = this.socketData[socketId].name
+        delete this.sockets[playerName]
         delete this.socketData[socketId]
     }
 }
