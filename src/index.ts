@@ -1,5 +1,5 @@
-import { Message } from "./data/Message"
-import { RoomWith } from "./data/RoomWith"
+import { Message } from "./models/Message"
+import { RoomWith } from "./models/RoomWith"
 
 import { IGameData } from "./games/IGameData"
 
